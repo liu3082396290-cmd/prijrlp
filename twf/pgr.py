@@ -104,6 +104,27 @@ def _stored_pgr_record(raw: Any) -> WifeRecord | None:
     return record
 
 
+async def _refresh_daily_pgr_wife_record(ev: Event) -> WifeRecord | None:
+    """重复抽取：无视历史状态，重新随机选一位并覆盖今天的战双老婆。"""
+    key = _user_key(ev)
+    bucket = _daily_bucket_name('pgr')
+    rng = _refresh_rng(ev, key, 'pgr_wife')
+
+    candidates = await _load_pgr_wife_candidates()
+    if not candidates:
+        return None
+    chosen = _pick_role_record(candidates, rng)
+    if chosen is None:
+        return None
+
+    async with _daily_context_lock(ev):
+        context = await _load_daily_context(ev)
+        value = _record_to_dict(chosen, ev, key)
+        await _save_daily_records(ev, [(bucket, key, value)])
+    logger.info(f'{LOG_PREFIX} 为用户 {key} 刷新战双老婆: {chosen.name}')
+    return chosen
+
+
 async def _ensure_daily_pgr_wife_record(ev: Event) -> WifeRecord | None:
     key = _user_key(ev)
     bucket = _daily_bucket_name('pgr')
@@ -162,6 +183,8 @@ async def _send_daily_pgr_wife(
     can_specify_role = _can_specify_wife(ev)
     specified_name = _normalize_role_name(specified_name)
     is_transient_draw = is_debug_active or bool(specified_name)
+    # 「今日战双老婆」是否允许重复抽取并覆盖（离婚/被抢/送出后也可重新抽）
+    allow_wife_refresh = _cfg_bool('DailyWifeAllowWifeRefresh', True)
 
     if specified_name and not can_specify_role:
         return await _safe_send(
@@ -169,7 +192,7 @@ async def _send_daily_pgr_wife(
             '只有机器人主人或指定老婆白名单用户才能指定战双老婆。',
         )
 
-    if not is_transient_draw:
+    if not is_transient_draw and not allow_wife_refresh:
         context = await _load_daily_context(ev)
         current = context[_daily_bucket_name('pgr')].get(_user_key(ev))
         state = _wife_state(current)
@@ -201,7 +224,10 @@ async def _send_daily_pgr_wife(
                 )
         record = _pick_role_record(candidates, random)
     else:
-        record = await _ensure_daily_pgr_wife_record(ev)
+        if allow_wife_refresh:
+            record = await _refresh_daily_pgr_wife_record(ev)
+        else:
+            record = await _ensure_daily_pgr_wife_record(ev)
     if record is None:
         root = _pgr_wife_root()
         return await _safe_send(

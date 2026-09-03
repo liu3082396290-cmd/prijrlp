@@ -92,30 +92,31 @@ class PgrFeatureSourceTests(unittest.TestCase):
         daily_source = (ROOT / 'twf' / 'daily.py').read_text(encoding='utf-8-sig')
         pgr_source = (ROOT / 'twf' / 'pgr.py').read_text(encoding='utf-8-sig')
 
-        daily_function = ast.get_source_segment(
-            daily_source,
-            next(
-                node
-                for node in ast.parse(daily_source).body
-                if isinstance(node, ast.AsyncFunctionDef)
-                and node.name == '_send_daily_wife'
-            ),
-        ) or ''
-        pgr_function = ast.get_source_segment(
-            pgr_source,
-            next(
-                node
-                for node in ast.parse(pgr_source).body
-                if isinstance(node, ast.AsyncFunctionDef)
-                and node.name == '_send_daily_pgr_wife'
-            ),
-        ) or ''
+        def _function(name: str, source_text: str) -> str:
+            return ast.get_source_segment(
+                source_text,
+                next(
+                    node
+                    for node in ast.parse(source_text).body
+                    if isinstance(node, ast.AsyncFunctionDef)
+                    and node.name == name
+                ),
+            ) or ''
+
+        daily_function = _function('_send_daily_wife', daily_source)
+        pgr_function = _function('_send_daily_pgr_wife', pgr_source)
 
         for source in (daily_function, pgr_function):
             self.assertIn("is_master = _is_master(ev)", source)
             self.assertIn("_cfg_bool('DailyWifeDebugMode', False) and is_master", source)
-            self.assertLess(source.index('is_debug_active ='), source.index('_get_other_daily_wife_name('))
-            self.assertIn('if not is_transient_draw:', source)
+            self.assertLess(
+                source.index('is_debug_active ='),
+                source.index('_get_other_daily_wife_name('),
+            )
+            # Debug/指定角色（is_transient_draw）始终绕过共享每日唯一检查；
+            # 「每日老婆重复抽取」开关关闭（not allow_wife_refresh）才执行旧有唯一性检查。
+            self.assertIn('if not is_transient_draw', source)
+            self.assertIn('not allow_wife_refresh', source)
 
     def test_role_selection_has_independent_sv_and_whitelist(self) -> None:
         config = (ROOT / 'config_default.py').read_text(encoding='utf-8-sig')
@@ -146,13 +147,17 @@ class PgrFeatureSourceTests(unittest.TestCase):
             ),
         ) or ''
 
+        # Debug/指定角色仍为临时抽取，不写记录。
         self.assertIn('if is_transient_draw:', function)
         self.assertIn('_load_pgr_wife_candidates()', function)
         self.assertIn('_pgr_candidates_by_name(candidates, specified_name)', function)
         self.assertIn('只有机器人主人或指定老婆白名单用户', function)
         self.assertIn('战双老婆图库中没有角色', function)
         self.assertIn('_pick_role_record(candidates, random)', function)
-        self.assertIn('else:\n        record = await _ensure_daily_pgr_wife_record(ev)', function)
+        # 普通抽取：开关开启时走刷新覆盖；关闭时走原“一天一次 + 持久化”逻辑
+        self.assertIn('if allow_wife_refresh:', function)
+        self.assertIn('record = await _refresh_daily_pgr_wife_record(ev)', function)
+        self.assertIn('else:\n            record = await _ensure_daily_pgr_wife_record(ev)', function)
 
     def test_pgr_prefix_passes_specified_name(self) -> None:
         source = (ROOT / 'twf' / 'pgr.py').read_text(encoding='utf-8-sig')

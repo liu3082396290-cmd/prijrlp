@@ -279,8 +279,8 @@ async def _send_daily_wife(bot: Bot, ev: Event, mode: str = 'wife', specified_na
     can_specify_role = _can_specify_wife(ev)
     specified_name = _normalize_role_name(specified_name)
     is_transient_draw = is_debug_active or bool(specified_name)
-    # 「今日老婆/jrlp」是否允许重复抽取并覆盖（离婚/被抢/送出后也可重新抽）
-    allow_wife_refresh = mode == 'wife' and _cfg_bool('DailyWifeAllowWifeRefresh', True)
+    # 「今日老婆/jrlp/今日异环老婆」是否允许重复抽取并覆盖（离婚/被抢/送出后也可重新抽）
+    allow_wife_refresh = mode in ('wife', 'nte') and _cfg_bool('DailyWifeAllowWifeRefresh', True)
 
     if specified_name and not can_specify_role:
         logger.warning(
