@@ -1,0 +1,286 @@
+{
+  "每日老婆": {
+    "desc": "每天一次，全天固定",
+    "data": [
+      {
+        "name": "来点老婆",
+        "desc": "每次从独立远程图库随机取图，每人每天限 3 次（同群单独计算），不写每日记录，也不参与抢、送、离婚",
+        "eg": "来点老婆",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "今日老婆",
+        "desc": "抽取今日老婆",
+        "eg": "今日老婆",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "今日老公",
+        "desc": "抽取今日老公（控制台开启后生效）",
+        "eg": "今日老公",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "今日异环老婆",
+        "desc": "抽取异环老婆（控制台开启后生效）",
+        "eg": "今日异环老婆",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "今日战双老婆",
+        "desc": "从本地战双图库抽取；主人或指定老婆白名单用户可在命令后指定角色",
+        "eg": "今日战双老婆",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "上传战双老婆图片",
+        "desc": "上传图片到已存在的战双角色文件夹（主人或上传白名单）",
+        "eg": "上传战双老婆图片 露西亚 [图片]",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "老婆列表",
+        "desc": "查看本群今日老婆汇总",
+        "eg": "老婆列表",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "老公列表",
+        "desc": "查看本群今日老公汇总",
+        "eg": "老公列表",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      }
+    ]
+  },
+  "老婆互动": {
+    "desc": "抢、送、娶群友互动玩法",
+    "data": [
+      {
+        "name": "抢老婆",
+        "desc": "有概率抢走对方今日老婆",
+        "eg": "抢老婆 @对方",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "送老婆",
+        "desc": "把今日老婆送给对方",
+        "eg": "送老婆 @对方",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "接受老婆赠送",
+        "desc": "同意接受对方的赠送",
+        "eg": "接受老婆赠送",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "拒绝老婆赠送",
+        "desc": "拒绝对方的赠送请求",
+        "eg": "拒绝老婆赠送",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "抢老公",
+        "desc": "有概率抢走对方今日老公",
+        "eg": "抢老公 @对方",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "送老公",
+        "desc": "把今日老公送给对方",
+        "eg": "送老公 @对方",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "接受老公赠送",
+        "desc": "同意接受对方送来的老公",
+        "eg": "接受老公赠送",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "拒绝老公赠送",
+        "desc": "拒绝对方的送老公请求",
+        "eg": "拒绝老公赠送",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "离婚",
+        "desc": "结束今天全部婚姻关系（老婆/老公/萝莉/异环/战双），不触发补偿",
+        "eg": "离婚",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "老公离婚",
+        "desc": "同「离婚」，结束今天全部婚姻关系",
+        "eg": "老公离婚",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "娶群友",
+        "desc": "从群成员随机娶群友（控制台开启后生效）",
+        "eg": "娶群友",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      }
+    ]
+  },
+  "今日萝莉": {
+    "desc": "随机萝莉图（配置接口地址或上传本地图片）",
+    "data": [
+      {
+        "name": "今日萝莉",
+        "desc": "获取今日萝莉图，当天固定后可被抢/送",
+        "eg": "今日萝莉",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "抢萝莉",
+        "desc": "有概率抢走对方今日萝莉",
+        "eg": "抢萝莉 @对方",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "送萝莉",
+        "desc": "把今日萝莉送给对方",
+        "eg": "送萝莉 @对方",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "接受萝莉赠送",
+        "desc": "同意接受对方送来的萝莉",
+        "eg": "接受萝莉赠送",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "拒绝萝莉赠送",
+        "desc": "拒绝对方的送萝莉请求",
+        "eg": "拒绝萝莉赠送",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "萝莉离婚",
+        "desc": "同「离婚」，结束今天全部婚姻关系",
+        "eg": "萝莉离婚",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": false
+      },
+      {
+        "name": "上传萝莉图片",
+        "desc": "上传萝莉图片到本地库（主人或上传白名单）",
+        "eg": "上传萝莉图片 [图片]",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      },
+      {
+        "name": "查看萝莉图片",
+        "desc": "查看本地萝莉图片列表及图片ID",
+        "eg": "查看萝莉图片",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      },
+      {
+        "name": "删除萝莉图片",
+        "desc": "删除指定图片（加ID删单张）或清空全部",
+        "eg": "删除萝莉图片 abcd1234",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      }
+    ]
+  },
+  "自定义老婆": {
+    "desc": "创建和管理需主人权限；上传支持主人或上传白名单",
+    "data": [
+      {
+        "name": "创建老婆",
+        "desc": "创建自定义老婆角色",
+        "eg": "创建老婆 达妮娅",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      },
+      {
+        "name": "上传老婆图片",
+        "desc": "上传图片绑定到角色（主人或上传白名单）",
+        "eg": "上传老婆图片 达妮娅",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      },
+      {
+        "name": "查看老婆图片",
+        "desc": "查看角色已上传的图片列表",
+        "eg": "查看老婆图片 达妮娅",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      },
+      {
+        "name": "删除老婆",
+        "desc": "删除自定义老婆角色（需二次确认）",
+        "eg": "删除老婆 达妮娅",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      },
+      {
+        "name": "分配老婆",
+        "desc": "主人为指定群友分配今日老婆",
+        "eg": "分配老婆 @对方 角色名",
+        "need_ck": false,
+        "need_sk": false,
+        "need_admin": true
+      }
+    ]
+  }
+}
